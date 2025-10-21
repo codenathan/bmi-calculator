@@ -78,8 +78,6 @@ const handleCalculate = () => {
       <BmiForm
         v-model:height="height"
         v-model:weight="weight"
-        @update:height="($event) => (height = $event)"
-        @update:weight="($event) => (weight = $event)"
         @calculate="handleCalculate"
         @reset="handleReset"
       />
