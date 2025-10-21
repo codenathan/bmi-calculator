@@ -9,8 +9,6 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: "update:height", value: number | undefined): void;
-  (e: "update:weight", value: number | undefined): void;
   (e: "calculate"): void;
   (e: "reset"): void;
 }>();
