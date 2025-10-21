@@ -2,14 +2,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { computed } from "vue";
 
-// Use `defineProps` with `v-model` support
+
 const props = defineProps<{
   height?: number;
   weight?: number;
 }>();
 
-// Emits for `v-model` and actions
+
 const emits = defineEmits<{
   (e: "update:height", value: number | undefined): void;
   (e: "update:weight", value: number | undefined): void;
@@ -17,11 +18,17 @@ const emits = defineEmits<{
   (e: "reset"): void;
 }>();
 
-// Helper function to update number props
-const updateHeight = (value: string) =>
-  emits("update:height", value ? Number(value) : undefined);
-const updateWeight = (value: string) =>
-  emits("update:weight", value ? Number(value) : undefined);
+const heightModel = computed({
+  get: () => props.height ?? "",
+  set: (val: string | number) =>
+    emits("update:height", val !== "" && val !== undefined ? Number(val) : undefined),
+});
+
+const weightModel = computed({
+  get: () => props.weight ?? "",
+  set: (val: string | number) =>
+    emits("update:weight", val !== "" && val !== undefined ? Number(val) : undefined),
+});
 </script>
 
 <template>
@@ -34,8 +41,7 @@ const updateWeight = (value: string) =>
         type="number"
         placeholder="Enter height in centimeters"
         class="transition-all duration-200 focus:scale-[1.01]"
-        :value="props.height"
-        @input="updateHeight($event.target.value)"
+        v-model="heightModel"
       />
     </div>
 
@@ -47,8 +53,7 @@ const updateWeight = (value: string) =>
         type="number"
         placeholder="Enter weight in kilograms"
         class="transition-all duration-200 focus:scale-[1.01]"
-        :value="props.weight"
-        @input="updateWeight($event.target.value)"
+        v-model="weightModel"
       />
     </div>
   </div>
