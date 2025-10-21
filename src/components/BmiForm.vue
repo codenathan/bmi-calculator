@@ -2,14 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { computed } from "vue";
-
 
 const props = defineProps<{
   height?: number;
   weight?: number;
 }>();
-
 
 const emits = defineEmits<{
   (e: "update:height", value: number | undefined): void;
@@ -18,17 +15,8 @@ const emits = defineEmits<{
   (e: "reset"): void;
 }>();
 
-const heightModel = computed({
-  get: () => props.height ?? "",
-  set: (val: string | number) =>
-    emits("update:height", val !== "" && val !== undefined ? Number(val) : undefined),
-});
-
-const weightModel = computed({
-  get: () => props.weight ?? "",
-  set: (val: string | number) =>
-    emits("update:weight", val !== "" && val !== undefined ? Number(val) : undefined),
-});
+const heightModel = defineModel<number | undefined>("height");
+const weightModel = defineModel<number | undefined>("weight");
 </script>
 
 <template>
